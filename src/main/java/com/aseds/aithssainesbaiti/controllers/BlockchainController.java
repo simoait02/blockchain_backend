@@ -2,6 +2,7 @@ package com.aseds.aithssainesbaiti.controllers;
 
 import com.aseds.aithssainesbaiti.domain.Block;
 import com.aseds.aithssainesbaiti.domain.Blockchain;
+import com.aseds.aithssainesbaiti.domain.Transaction;
 import com.aseds.aithssainesbaiti.services.BlockchainService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class BlockchainController {
     }
 
     @PostMapping("/add-block")
-    public Block addBlock(@RequestBody String data) {
+    public Block addBlock(@RequestBody Transaction data) {
         return blockchainService.addBlock(data);
     }
 

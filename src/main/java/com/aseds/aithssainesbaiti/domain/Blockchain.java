@@ -1,6 +1,5 @@
 package com.aseds.aithssainesbaiti.domain;
 
-import lombok.Getter;
 
 import java.util.ArrayList;
 
@@ -17,14 +16,14 @@ public class Blockchain {
     }
 
     private Block createGenesisBlock() {
-        return new Block(0, "0", "Genesis Block", 0);
+        return new Block(0, "0", new Transaction("simo","s0",10), 0);
     }
 
     public Block getLatestBlock() {
         return chain.getLast();
     }
 
-    public Block addBlock(String data) {
+    public Block addBlock(Transaction data) {
         Block previousBlock = getLatestBlock();
         int proof = generateProofOfWork(previousBlock.getProof());
         Block newBlock = new Block(chain.size(), previousBlock.getHash(), data, proof);

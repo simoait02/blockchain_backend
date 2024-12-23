@@ -8,10 +8,10 @@ import java.util.List;
 @Service
 public class TransactionService {
 
-    private final List<Transaction> pendingTransactions;
+    private static List<Transaction> pendingTransactions;
 
     public TransactionService() {
-        this.pendingTransactions = new ArrayList<>();
+        pendingTransactions = new ArrayList<>();
     }
     public Transaction addTransaction(String sender, String recipient, double amount) {
         Transaction transaction = new Transaction(sender, recipient, amount);
@@ -19,7 +19,7 @@ public class TransactionService {
         return transaction;
     }
 
-    public List<Transaction> getPendingTransactions() {
+    public static List<Transaction> getPendingTransactions() {
         return new ArrayList<>(pendingTransactions);
     }
 

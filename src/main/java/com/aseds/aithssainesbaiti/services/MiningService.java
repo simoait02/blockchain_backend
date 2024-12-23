@@ -3,6 +3,7 @@ package com.aseds.aithssainesbaiti.services;
 import com.aseds.aithssainesbaiti.domain.Block;
 import com.aseds.aithssainesbaiti.domain.Blockchain;
 import com.aseds.aithssainesbaiti.domain.HashUtils;
+import com.aseds.aithssainesbaiti.domain.Transaction;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,18 +14,20 @@ public class MiningService {
         this.blockchainService = blockchainService;
     }
     public Block mineBlock() {
+
         Blockchain blockchain = blockchainService.getBlockchain();
-        Block lastBlock = blockchain.getLatestBlock();
-        String data = "Mined Block Data";
-        int proof = generateProofOfWork(lastBlock.getProof());
-        Block newBlock = new Block(
-                blockchain.getChain().size(),
-                lastBlock.getHash(),
-                data,
-                proof
-        );
-        blockchain.addBlock(newBlock.getData());
-        return newBlock;
+        for (Transaction transaction:TransactionService.getPendingTransactions()){
+            Block lastBlock = blockchain.getLatestBlock();
+            int proof = generateProofOfWork(lastBlock.getProof());
+            Block newBlock = new Block(
+                    blockchain.getChain().size(),
+                    lastBlock.getHash(),
+                    transaction,
+                    proof
+            );
+            blockchain.addBlock(newBlock.getData());
+        }
+        return blockchain.getLatestBlock();
     }
     private int generateProofOfWork(int lastProof) {
         int proof = 0;
